@@ -61,21 +61,23 @@
     \begin{table}[H]
         \centering
         \begin{tabular}{p{2cm}p{4cm}<{\centering}p{1cm}p{2cm}p{4cm}<{\centering}}
-            实验课程:    & 计算机网络 & \quad & 年\qquad 级: & 2022级               \\ \cline{2-2} \cline{5-5}
+            实验课程:    & 计算机网络 & \quad & 年\qquad 级: & 2023级               \\ \cline{2-2} \cline{5-5}
             实验编号:    & Lab 07     & \quad & 实验名称:    & \texttt{socket} 编程
             \\ \cline{2-2} \cline{5-5}
-            姓\qquad 名: & 李鹏达     & \quad & 学\qquad 号: & 10225101460          \\ \cline{2-2} \cline{5-5}
+            姓\qquad 名: & 王海生     & \quad & 学\qquad 号: & 10235101559          \\ \cline{2-2} \cline{5-5}
         \end{tabular}
     \end{table}
 \end{center}
 \rule{\textwidth}{1pt}
+
+\tableofcontents
+
 %--------------------正文--------------------%
 \section{实验目的}
 \begin{enumerate}[noitemsep, label={{\arabic*})}]
-    \item 熟悉 \texttt{socket} 编程的基本原理
-    \item 掌握简单的套接字编程
-    \item 掌握通过 \texttt{socket} 编程实现 \texttt{C/S} 程序的基本方法
-    \item 了解应用层和运输层的作用及相关协议的工作原理和机制
+    \item 掌握\texttt{Socket}编程接口；
+    \item 掌握基于\texttt{Socket}编程接口编写网络通信程序的方法和典型程序构成；
+    \item 根据指定的通信需求，使用\texttt{Socket}编程接口编写网络通信程序的服务器端程序和客户端程序。
 
 \end{enumerate}
 \section{实验内容与实验步骤}
@@ -87,7 +89,7 @@
     \centering
     \begin{tabularx}{0.95\textwidth}{|X|X|X|X|X|X|X|X|X|X|}
         \hline
-        \multicolumn{3}{|X|}{\texttt{Server}} & \multicolumn{3}{|X|}{\texttt{Client}}   & \multicolumn{3}{|X|}{整个系统}   & \texttt{Bonus}                                                                                                                                                                                                                                                    \\
+        \multicolumn{3}{|X|}{\texttt{Server}} & \multicolumn{3}{|X|}{\texttt{Client}}   & \multicolumn{3}{|X|}{整体}   & \texttt{加分项} \\
         \hline
         能在标准输出打印客户端发送的消息      & 支持5个以上客户端同时发送消息并逐一打印 & 绑定至错误的端口号时提示出错信息 & 能从标准输入或文件接收信息 & 标准输入信息以两次回车作为结束标志 & 连接至错误的 \texttt{IP} 地址/端口号时能提示错误信息 & 支持在 \texttt{local host} 及两台不同机器上运行 & 支持长文本消息（不少于 \texttt{20KB}），有缓冲区管理 & 容错性好，无闪退 & 支持双工通信 \\
         \hline
@@ -96,7 +98,7 @@
 
 \subsection{实验步骤}
 
-\subsubsection{创建 \texttt{socket}}
+\subsubsection{\texttt{create socket}}
 
 在 \texttt{Linux} 下，使用 \texttt{sys/socket.h} 头文件（\texttt{Windows} 下是 \texttt{winsock2.h}） 中的 \texttt{socket} 函数创建一个套接字。（在 \texttt{Windows} 下需要先调用 \texttt{WSAStartup} 进行准备）
 
@@ -531,7 +533,7 @@
     \caption{连接至错误的 \texttt{IP} 地址/端口号时能提示错误信息}
 \end{figure}
 
-\subsection{整个系统}
+\subsection{整体}
 
 \subsubsection{支持在 \texttt{localhost} 及两台不同机器上运行}
 
@@ -557,7 +559,7 @@
 
 可以正常工作，无闪退，容错性好。
 
-\subsection{\texttt{Bonus}}
+\subsection{加分项}
 
 \subsubsection{支持双工通信}
 
@@ -586,7 +588,21 @@
 
 \section{实验结果总结}
 
-在本次实验中，我掌握了 \texttt{socket} 编程的基本要领。
+在本次基于 \texttt{Socket} 编程的实验中，我深入探索了网络通信编程的世界，成功实现了 Client 和 Server 之间的通信，并达成了多项实验要求，收获颇丰。
+
+在实验过程中，我首先熟练掌握了 \texttt{Socket} 编程的核心接口。通过 \texttt{socket()} 函数创建套接字，清晰地理解了 \texttt{AF\_INET} 与 \texttt{SOCK\_STREAM} 参数的含义及其在 IPv4 和 TCP 协议下的作用。在绑定端口号的 \texttt{bind()} 函数实现中，学会了对端口号的有效性进行严谨检查，以及如何处理绑定失败的情况，这对于确保服务器正确运行在指定端口至关重要。
+
+\texttt{listen()} 函数让我明白了如何设置服务器的监听状态以及最大连接数，而 \texttt{accept()} 函数则实现了服务器对客户端连接请求的接收与处理。在客户端的 \texttt{connect()} 函数中，掌握了如何根据指定的 IP 地址和端口号与服务器建立连接，并能准确地对错误的 IP 地址和端口号进行检测与提示，增强了程序的健壮性。
+
+数据的发送与接收通过 \texttt{send()} 和 \texttt{recv()} 函数得以实现，我不仅学会了基本的数据传输操作，还考虑到了长文本消息的传输需求，通过合理的缓冲区管理，成功实现了对不少于 20KB 长文本消息的支持，确保了大数据量传输的稳定性和可靠性。
+
+为了满足多个客户端同时与服务器通信的要求，我运用多线程技术，为每个客户端连接创建独立的线程来处理，实现了服务器对多个客户端消息的并发处理与逐一打印。这不仅提升了程序的并发性能，也让我对多线程编程在网络通信中的应用有了更深入的理解。
+
+在实验的整体测试中，程序表现出了良好的兼容性，能够在 \texttt{localhost} 以及不同机器上稳定运行，无论是在 Windows 系统、Linux 系统还是通过手机进行测试，都能正确地建立连接并进行通信。同时，程序的容错性也得到了有效验证，在面对各种异常情况，如错误的端口绑定、错误的连接信息以及客户端与服务器之间的异常断开等，都能妥善处理，不会出现闪退等不稳定现象。
+
+此外，我还成功实现了加分项中的双工通信功能。通过在服务器端开启额外的线程用于接收用户输入并向客户端发送消息，使得客户端与服务器之间能够实现双向的信息交互，进一步丰富了网络通信程序的功能。
+
+通过本次实验，我不仅掌握了 \texttt{Socket} 编程的技术要点，还在实践中提升了自己解决问题的能力、对网络通信原理的理解以及多线程编程的应用水平。这些收获将为我今后从事网络相关的编程开发工作奠定坚实的基础，也让我对网络编程领域充满了更浓厚的兴趣和探索欲望。
 
 \section{附录}
 
@@ -988,7 +1004,7 @@
     #endif // _SERVER_H_    
 \end{lstlisting}
 
-\subsection{\texttt{client.cpp}}
+\subsubsection{\texttt{client.cpp}}
 
 \begin{lstlisting}[language=C++]
     #include "include/socket_client.hpp"
