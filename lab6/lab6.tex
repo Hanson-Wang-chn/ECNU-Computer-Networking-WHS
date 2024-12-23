@@ -110,19 +110,19 @@ TCP的三次握手协议主要分为以下三个步骤：
   \item 客户必须再次回应服务器端一个\texttt{ACK}确认数据段。
 \end{enumerate}
 
-在你捕获到的结果中，找到设置了SYN标志的TCP段及其后的数据包，完成以下问题： 
+在你捕获到的结果中，找到设置了\texttt{SYN}标志的\texttt{TCP}段及其后的数据包，完成以下问题： 
 
 \begin{enumerate}[noitemsep]
-  \item 绘制三次握手的时序图，直到并包括建立连接后计算机发送的第一个数据包（HTTP GET请求），包括：
+  \item 绘制三次握手的时序图，直到并包括建立连接后计算机发送的第一个数据包（\texttt{HTTP GET}请求），包括：
   \begin{itemize}
-  	\item 每个数据段的序列号和Ack标号；
+  	\item 每个数据段的序列号和\texttt{Ack}标号；
   	\item 本地计算机发送或接收每个数据段的时间（以毫秒为单位）；
-  	\item 本地计算机从发送SYN段到接收到SYN-ACK段的往返时间。
+  	\item 本地计算机从发送\texttt{SYN}段到接收到\texttt{SYN-ACK}段的往返时间。
   \end{itemize}
-  \item SYN数据包上携带哪些TCP 选项？
+  \item \texttt{SYN}数据包上携带哪些\texttt{TCP}选项？
 \end{enumerate}
 
-TCP的四次挥手主要分为以下四个步骤：
+\texttt{TCP}的四次挥手主要分为以下四个步骤：
 \begin{enumerate}[noitemsep]
   \item 客户端进程发出断开连接指令，这将导致客户端的\texttt{TCP}程序创建一个特殊的\texttt{TCP}报文段，发送到服务器。这个报文段的\texttt{FIN}字段被置为1，表示这是一条断开连接的报文；
   \item 服务器接收到客户端发来的断开连接报文，向客户端回送这个报文的确认报文（\texttt{ACK}字段为1），告诉服务器已经接收到\texttt{FIN}报文，并允许断开连接；
@@ -132,34 +132,34 @@ TCP的四次挥手主要分为以下四个步骤：
 
 回答问题：
 \begin{enumerate}[noitemsep]
-  \item 观察客户端与服务器连接的释放过程，画出释放连接的步骤图
-  \item 思考为什么连接的时候是三次握手，关闭的时候却是四次挥手？
+  \item 传输完成后，\texttt{TCP}连接会以四次挥手或一端发送\texttt{RST}数据包的方式断开，同1一样，绘制\texttt{TCP}连接释放的时序图（从发出第一个\texttt{FIN}或\texttt{RST}到连接断开为止）。
 \end{enumerate}
 
 \subsubsection{TCP 数据传输}
 
-观察Wireshark生成的IO图表
+在“统计”菜单下，选择“ IO图表”，以查看数据包速率。
 
-回答问题：（以各自实验为准）
+\begin{itemize}
+	\item 调整过滤器为“\texttt{tcp.srcport==80}”仅查看下载数据包，重新绘图；
+	\item 调整过滤器为“\texttt{tcp.dstport==80}”仅查看上传数据包，重新绘图；
+\end{itemize}
+
+通过你对数据传输的理解，回答以下问题：
+
 \begin{enumerate}[label={\arabic*）}, noitemsep]
-  \item 实验中的下载速率是多少？ \texttt{Bits/s} \& \texttt{packets/s}
-  \item 实验中的上传速率，即ACK消息的发送速率是多少？ \texttt{Bits/s} \& \texttt{packets/s}
-\end{enumerate}
-
-观察数据包传输过程
-
-\begin{enumerate}[noitemsep]
-  \item 观察数据传输过程中 \texttt{Acknowledgment number}，\texttt{sequence number} 和 \texttt{Segment Len} 之间的变化
+  \item 实验中下载的大概速率为多少？（以\texttt{packets/s}和\texttt{bits/s}为单位）
+  \item 下载内容（即\texttt{TCP}有效负载）占下载率的百分比是多少？
+  \item 实验中上传的大概速率为多少？（以\texttt{packets/s}和\texttt{bits/s}为单位）
   \item 如果最近从服务器收到的 \texttt{TCP} 数据段的序列号是 $X$，那么下一个发送的 \texttt{ACK} 是多少？
 \end{enumerate}
 
 \subsubsection{问题讨论}
 
 \begin{enumerate}[noitemsep]
-  \item Explore the congestion control and the classic AIMD behavior of TCP. To do this, you will likely want to capture a trace while you are sending (not receiving) a moderate amount of data on a TCP connection. You can then use the “TCP Stream Graph” tools as well as other analysis to observe how the congestion window changes over time.
-  \item Explore the reliability mechanisms of TCP more deeply. Capture a trace of a connection that includes segment loss. See what triggers the retransmissions and when. Also look at the round-trip time estimator.
-  \item Look at the use of options including SACK to work through the details. You should see information about ranges of received bytes during times of segment loss.
-  \item TCP is the transport layer underlying the web. You can see how your browser makes use of TCP by setting up concurrent connections.
+  \item 探索\texttt{TCP}的拥塞控制和经典\texttt{AIMD}策略。
+  \item 更深入地探索\texttt{TCP}的可靠性机制。捕获包括段丢失的\texttt{TCP}连接，查看什么触发重新传输以及何时触发，另外查看往返时间估算工具。
+  \item 查看包括\texttt{SACK}在内的选项的使用以了解详细信息。
+  \item \texttt{TCP}是\texttt{Web}的基础传输层。可以通过设置并发连接来查看浏览器如何使用\texttt{TCP}。
 \end{enumerate}
 
 
@@ -239,7 +239,7 @@ TCP的四次挥手主要分为以下四个步骤：
 \end{figure}
 
 
-\subsection{分析 \texttt{TCP} 报文}
+\subsection{\texttt{TCP}报文段的结构}
 
 选择一个\texttt{TCP}数据包，如下所示：
 
@@ -280,7 +280,7 @@ TCP的四次挥手主要分为以下四个步骤：
     \multicolumn{4}{|X|}{n bytes}                                                                                                          \\
     \hline
   \end{tabularx}
-  \caption{\texttt{UDP}包结构}
+  \caption{\texttt{TCP}报文段的结构图}
 \end{table}
 
 其中 \texttt{Flags} 字段包括 \texttt{Reserved}, \texttt{Accurate ECN}, \texttt{Congestion Window Reduced}, \texttt{ECN-Echo}, \\ \texttt{Urgent}, \texttt{Acknowledgment}, \texttt{Push}, \texttt{Reset}, \texttt{Syn}, \texttt{Fin}。
@@ -315,7 +315,7 @@ TCP的四次挥手主要分为以下四个步骤：
 
 \subsection{\texttt{TCP} 连接的建立和释放}
 
-\subsubsection{三次握手}
+\subsubsection{三次握手的时序图}
 
 我们知道，三次握手的过程如下：
 
@@ -341,7 +341,37 @@ TCP的四次挥手主要分为以下四个步骤：
   \caption{三次握手协议的步骤图}
 \end{figure}
 
-\subsubsection{四次挥手}
+\subsubsection{\texttt{SYN}数据包上携带的\texttt{TCP}选项}
+
+在\texttt{TCP}连接建立过程中，\texttt{SYN}数据包用于初始化连接，并携带多种\texttt{TCP}选项：
+
+\begin{enumerate}
+	\item \texttt{Maximum Segment Size (MSS)}
+	
+	定义了在这个连接上发送的\texttt{TCP}段中最大的数据量（不包括\texttt{TCP}头部）。接收端通过这个选项告诉发送端它能接受的最大段大小，从而避免分片。
+	
+	\item \texttt{Window Scale Option}
+	
+	允许窗口大小超过65,535字节。它通过指定一个移位计数来扩大窗口尺寸，这使得\texttt{TCP}能够在高速、高延迟的网络上有效地工作。
+	
+	\item \texttt{SACK Permitted}
+	
+	\texttt{Selective Acknowledgment}允许接收方通知发送方哪些数据已经成功接收，哪些数据丢失需要重传。这样可以提高效率，因为不需要重传所有未确认的数据。
+	
+	\item \texttt{Timestamps}
+	
+	时间戳选项提供了一种测量往返时间的方法，并且有助于处理旧的数据包（即防止老的重复数据包被错误地认为是新的）。每个数据包都包含发送时的时间戳，以及最近收到的数据包的时间戳回显。
+	
+	\item \texttt{No Operation (NOP)}
+	
+	\texttt{NOP}选项没有实际作用，通常用来填充其他选项之间的空间，确保选项字段对齐到32比特边界，便于解析。
+	
+	\item \texttt{User Timeout Option (UTO)}
+	
+	它允许应用程序设置一个超时值，当超过该时间还未收到对方的响应，则关闭连接。
+\end{enumerate}
+
+\subsubsection{四次挥手的时序图}
 
 TCP的四次挥手主要分为以下四个步骤：
 
@@ -360,7 +390,7 @@ TCP的四次挥手主要分为以下四个步骤：
   \caption{四次挥手}
 \end{figure}
 
-画出四次挥手协议的步骤图如下：
+四次挥手协议的时序图如下：
 
 \begin{figure}[H]
   \centering
@@ -368,41 +398,45 @@ TCP的四次挥手主要分为以下四个步骤：
   \caption{四次挥手协议的步骤图}
 \end{figure}
 
-回答问题：
-
-\begin{itemize}[noitemsep]
-  \item 思考为什么连接的时候是三次握手，关闭的时候却是四次挥手？
-
-        因为一方在收到对方发来的\texttt{FIN}包时，有可能还有未发送完的数据包，所以这时它会先给对方发送一个\texttt{ACK}包，等它将数据包都处理完毕并发送后，再向对方发送\texttt{FIN ACK}报文来同意关闭连接，最后对方收到\texttt{FIN ACK}包，向它回复\texttt{ACK}包。而建立连接时，不会出现这个问题，所以只需要三次握手即可建立连接。
-
-\end{itemize}
-
 \subsection{TCP 数据传输}
 
-观察 \texttt{Wireshark} 生成的 \texttt{IO} 图表, 如下所示：
+通过你对数据传输的理解，回答以下问题：
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.95\textwidth]{img/10.png}
-  \caption{\texttt{IO} 图表}
-\end{figure}
+\begin{enumerate}
+	\item 实验中下载的大概速率为多少？（以\texttt{packets/s}和\texttt{bits/s}为单位）
+	
+	答：观察 \texttt{Wireshark} 生成的 \texttt{IO} （下载）图表, 如下所示：
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]{img/10.png}
+		\caption{\texttt{IO} （下载）图表}
+	\end{figure}
+	
+	所以，下载速度为 \texttt{3107000 \texttt{bits/s}}。
+	
+	\item 下载内容（即\texttt{TCP}有效负载）占下载率的百分比是多少？
+	
+	答：使用\texttt{tcp.srcport==80} 进行过滤，在中间位置选择一个较大的包，分析数据如下：总的数据量为1374B，TCP携带的内容为1320B，所以内容占下载率的96.10%。
+	
+	\item 实验中上传的大概速率为多少？（以\texttt{packets/s}和\texttt{bits/s}为单位）
+	
+	答：观察 \texttt{Wireshark} 生成的 \texttt{IO} （上传）图表, 如下所示：
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]{img/10.png}
+		\caption{\texttt{IO} （上传）图表}
+	\end{figure}
+	
+	所以，上传速度为 \texttt{732900 \texttt{bits/s}}。
+	
+	\item 如果最近从服务器收到的 \texttt{TCP} 数据段的序列号是 $X$，那么下一个发送的 \texttt{ACK} 是多少？
+	
+	答：下一个发送的 \texttt{ACK} 是 $X + \texttt{Segment Len}$
+\end{enumerate}
 
-下载速度为 \texttt{3107000 Bits/s}，
-上传速度为 \texttt{732900 Bits/s}
-
-~\\
-观察数据包传输过程，回答问题：
-
-\begin{itemize}[noitemsep]
-  \item 观察数据传输过程中 \texttt{Acknowledgment number}，\texttt{sequence number} 和 \texttt{Segment Len} 之间的变化
-
-  \item 如果最近从服务器收到的 \texttt{TCP} 数据段的序列号是 $X$，那么下一个发送的 \texttt{ACK} 是多少？
-
-        下一个发送的 \texttt{ACK} 是 $X + \texttt{Segment Len}$
-
-\end{itemize}
-
-\subsection{问题讨论}
+\subsection{继续探索\texttt{TCP}协议}
 
 下载一个大文件，观察 \texttt{TCP} 流图表，如下所示：
 
@@ -432,42 +466,50 @@ TCP的四次挥手主要分为以下四个步骤：
 
 回答下列问题：
 
-\begin{itemize}[noitemsep]
-  \item Explore the congestion control and the classic AIMD behavior of TCP. To do this, you will likely want to capture a trace while you are sending (not receiving) a moderate amount of data on a TCP connection. You can then use the “TCP Stream Graph” tools as well as other analysis to observe how the congestion window changes over time.
-        从吞吐量图表中可以看出，吞吐量随着时间的增加而增加，但是在某些时刻会突然下降，不断波动，这是因为在这些时刻发生了拥塞，\texttt{TCP} 会减小拥塞窗口，然后再慢慢增加，这就是拥塞控制的过程。
-  \item Explore the reliability mechanisms of TCP more deeply. Capture a trace of a connection that includes segment loss. See what triggers the retransmissions and when. Also look at the round-trip time estimator.
+\begin{enumerate}
+  \item 探索\texttt{TCP}的拥塞控制和经典\texttt{AIMD}策略。
+        
+  答：从吞吐量图表中可以看出，吞吐量随着时间的增加而增加，但是在某些时刻会突然下降，不断波动，这是因为在这些时刻发生了拥塞，\texttt{TCP} 会减小拥塞窗口，然后再慢慢增加，这就是拥塞控制的过程。
+  
+  \item 更深入地探索\texttt{TCP}的可靠性机制。捕获包括段丢失的\texttt{TCP}连接，查看什么触发重新传输以及何时触发，另外查看往返时间估算工具。
 
-        可以看到，当接受到的数据包顺序错误时（可能是之前的数据包丢失了），会触发重传机制，重传丢失的数据包。
+  答：可以看到，当接受到的数据包顺序错误时（可能是之前的数据包丢失了），会触发重传机制，重传丢失的数据包。
 
-        \begin{figure}[H]
-          \centering
-          \includegraphics[width=0.95\textwidth]{img/15.png}
-          \caption{错误重传}
-        \end{figure}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{img/15.png}
+    \caption{错误重传}
+  \end{figure}
 
-        往返时间图表已在上方列出。
-  \item Look at the use of options including SACK to work through the details. You should see information about ranges of received bytes during times of segment loss.
+  往返时间图表已在上方列出。
+  
+  \item 查看包括\texttt{SACK}在内的选项的使用以了解详细信息。
 
-        观察一个 \texttt{Options} 中包含了 \texttt{SACK} 的数据包，如下图所示：
+  观察一个 \texttt{Options} 中包含了 \texttt{SACK} 的数据包，如下图所示：
 
-        \begin{figure}[H]
-          \centering
-          \includegraphics[width=0.8\textwidth]{img/16.png}
-          \caption{\texttt{SACK}}
-        \end{figure}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/16.png}
+    \caption{\texttt{SACK}}
+  \end{figure}
 
-        可以看到，\texttt{SACK} 中包含了丢失的数据包的序列号范围。
-  \item TCP is the transport layer underlying the web. You can see how your browser makes use of TCP by setting up concurrent connections.
+  可以看到，\texttt{SACK} 中包含了丢失的数据包的序列号范围。
+  
+  \item \texttt{TCP}是\texttt{Web}的基础传输层。可以通过设置并发连接来查看浏览器如何使用\texttt{TCP}。
 
-        浏览器处理用户请求时，会建立多个 \texttt{TCP} 连接，并发地处理用户请求。
+  答：浏览器处理用户请求时，会建立多个 \texttt{TCP} 连接，并发地处理用户请求。
 
-\end{itemize}
+\end{enumerate}
 
 \section{实验结果总结}
 
-在本次实验中，我学习了 \texttt{TCP} 的数据包结构，以及 \texttt{TCP} 连接建立和释放的过程，还学习了 \texttt{TCP} 数据传输的过程。
+本次计算机网络实验围绕 \texttt{TCP} 展开，让我对其有了深入且全面的理解。
 
-同时，我还了解到了 \texttt{TCP} 的拥塞控制机制，以及 \texttt{TCP} 的可靠性机制。
+在实验过程中，我运用 \texttt{Wireshark} 和 \texttt{wget} 工具，成功捕获并分析了 \texttt{TCP} 报文，清晰绘制出 \texttt{TCP} 报文段结构，明确各字段含义，这使我对 \texttt{TCP} 数据包的构成有了透彻认知。通过观察 \texttt{TCP} 连接建立的三次握手和释放的四次挥手过程，我不仅绘制出详细时序图，还深入了解到每个步骤中数据包的变化及作用，尤其是 \texttt{SYN} 数据包携带的多种重要选项，如 \texttt{MSS}、\texttt{Window Scale Option} 等，它们在优化连接性能方面起着关键作用。
+
+在数据传输阶段，我学会从 \texttt{Wireshark} 的 IO 图表分析下载和上传速率，了解到 \texttt{TCP} 有效负载在下载率中的占比情况，还掌握了根据服务器接收的序列号确定下一个 \texttt{ACK} 值的方法。此外，通过进一步探索 \texttt{TCP} 协议，我对其拥塞控制的 \texttt{AIMD} 策略、可靠性机制（如段丢失触发重传）以及 \texttt{SACK} 选项的使用有了直观认识，并且明白了浏览器在处理 Web 请求时如何利用 \texttt{TCP} 建立并发连接。
+
+此次实验让我深刻认识到 \texttt{TCP} 在网络通信中的核心地位和重要性，它确保了数据的可靠传输与高效交互。
 
 \section{附录}
 
