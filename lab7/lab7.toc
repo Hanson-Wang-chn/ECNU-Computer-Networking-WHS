@@ -1,0 +1,45 @@
+\contentsline {section}{\numberline {1}实验目的}{2}{}%
+\contentsline {section}{\numberline {2}实验环境}{2}{}%
+\contentsline {section}{\numberline {3}软件需求分析}{3}{}%
+\contentsline {section}{\numberline {4}软件设计}{4}{}%
+\contentsline {subsection}{\numberline {4.1}架构分层}{4}{}%
+\contentsline {subsection}{\numberline {4.2}模块划分}{4}{}%
+\contentsline {subsubsection}{\numberline {4.2.1}服务器端}{4}{}%
+\contentsline {subsubsection}{\numberline {4.2.2}客户端}{5}{}%
+\contentsline {subsection}{\numberline {4.3}数据结构}{5}{}%
+\contentsline {subsection}{\numberline {4.4}接口设计}{5}{}%
+\contentsline {subsection}{\numberline {4.5}异常处理}{5}{}%
+\contentsline {section}{\numberline {5}软件实现}{5}{}%
+\contentsline {subsection}{\numberline {5.1}\texttt {create socket}}{5}{}%
+\contentsline {subsection}{\numberline {5.2}\texttt {bind}}{6}{}%
+\contentsline {subsection}{\numberline {5.3}\texttt {listen}}{6}{}%
+\contentsline {subsection}{\numberline {5.4}\texttt {accept}}{7}{}%
+\contentsline {subsection}{\numberline {5.5}\texttt {connect}}{7}{}%
+\contentsline {subsection}{\numberline {5.6}\texttt {send}}{8}{}%
+\contentsline {subsection}{\numberline {5.7}\texttt {recv}}{8}{}%
+\contentsline {subsection}{\numberline {5.8}\texttt {close}}{9}{}%
+\contentsline {section}{\numberline {6}软件测试}{9}{}%
+\contentsline {subsection}{\numberline {6.1}\texttt {Server}}{9}{}%
+\contentsline {subsubsection}{\numberline {6.1.1}能在标准输出打印客户端发送的消息}{9}{}%
+\contentsline {subsubsection}{\numberline {6.1.2}支持5个以上客户端同时发送消息并逐一打印}{10}{}%
+\contentsline {subsubsection}{\numberline {6.1.3}绑定至错误的端口号时提示出错信息}{11}{}%
+\contentsline {subsection}{\numberline {6.2}\texttt {Client}}{12}{}%
+\contentsline {subsubsection}{\numberline {6.2.1}能从标准输入或文件接收信息}{12}{}%
+\contentsline {subsubsection}{\numberline {6.2.2}标准输入信息以两次回车作为结束标志}{13}{}%
+\contentsline {subsubsection}{\numberline {6.2.3}连接至错误的 \texttt {IP} 地址/端口号时能提示错误信息}{14}{}%
+\contentsline {subsection}{\numberline {6.3}整体}{16}{}%
+\contentsline {subsubsection}{\numberline {6.3.1}支持在 \texttt {localhost} 及两台不同机器上运行}{16}{}%
+\contentsline {subsubsection}{\numberline {6.3.2}支持长文本消息（不少于 \texttt {20KB}）}{17}{}%
+\contentsline {subsection}{\numberline {6.4}容错性好，无闪退}{18}{}%
+\contentsline {subsection}{\numberline {6.5}加分项}{18}{}%
+\contentsline {subsubsection}{\numberline {6.5.1}支持双工通信}{18}{}%
+\contentsline {section}{\numberline {7}实验结果总结}{19}{}%
+\contentsline {section}{\numberline {8}附录}{20}{}%
+\contentsline {subsection}{\numberline {8.1}代码结构}{20}{}%
+\contentsline {subsection}{\numberline {8.2}源代码}{20}{}%
+\contentsline {subsubsection}{\numberline {8.2.1}\texttt {Makefile}}{20}{}%
+\contentsline {subsubsection}{\numberline {8.2.2}\texttt {socket.hpp}}{21}{}%
+\contentsline {subsubsection}{\numberline {8.2.3}\texttt {socket\_client.hpp}}{24}{}%
+\contentsline {subsubsection}{\numberline {8.2.4}\texttt {socket\_server.hpp}}{26}{}%
+\contentsline {subsubsection}{\numberline {8.2.5}\texttt {client.cpp}}{29}{}%
+\contentsline {subsubsection}{\numberline {8.2.6}\texttt {server.cpp}}{31}{}%

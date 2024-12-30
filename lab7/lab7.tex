@@ -80,25 +80,100 @@
     \item 根据指定的通信需求，使用\texttt{Socket}编程接口编写网络通信程序的服务器端程序和客户端程序。
 
 \end{enumerate}
-\section{实验内容与实验步骤}
-\subsection{实验内容}
 
-实现 \texttt{Client} 和 \texttt{Server} 的通信，并满足以下要求：
+\section{实验环境}
+\texttt{Windows} 下：
+\begin{itemize}[noitemsep]
+	\item \texttt{Windows 11 家庭中文版 23H2 22631.2715}
+	\item \texttt{gcc version 13.2.0 (MinGW-W64 x86\_64-ucrt-mcf-seh, built by Brecht Sanders)}
+	\item \texttt{GNU Make 3.81}
+\end{itemize}
+
+\texttt{Linux} 下：
+
+\begin{itemize}[noitemsep]
+	\item \texttt{Ubuntu 22.04.3 LTS on Windows 10 x86\_64}
+	\item \texttt{gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04)}
+	\item \texttt{GNU Make 4.3}
+\end{itemize}
+
+\section{软件需求分析}
+
+实验要求实现 \texttt{Client} 和 \texttt{Server} 的通信，并满足以下要求：
 
 \begin{table}[H]
-    \centering
-    \begin{tabularx}{0.95\textwidth}{|X|X|X|X|X|X|X|X|X|X|}
-        \hline
-        \multicolumn{3}{|X|}{\texttt{Server}} & \multicolumn{3}{|X|}{\texttt{Client}}   & \multicolumn{3}{|X|}{整体}   & \texttt{加分项} \\
-        \hline
-        能在标准输出打印客户端发送的消息      & 支持5个以上客户端同时发送消息并逐一打印 & 绑定至错误的端口号时提示出错信息 & 能从标准输入或文件接收信息 & 标准输入信息以两次回车作为结束标志 & 连接至错误的 \texttt{IP} 地址/端口号时能提示错误信息 & 支持在 \texttt{local host} 及两台不同机器上运行 & 支持长文本消息（不少于 \texttt{20KB}），有缓冲区管理 & 容错性好，无闪退 & 支持双工通信 \\
-        \hline
-    \end{tabularx}
+	\centering
+	\begin{tabularx}{0.95\textwidth}{|X|X|X|X|X|X|X|X|X|X|}
+		\hline
+		\multicolumn{3}{|X|}{\texttt{Server}} & \multicolumn{3}{|X|}{\texttt{Client}}   & \multicolumn{3}{|X|}{整体}   & \texttt{加分项} \\
+		\hline
+		能在标准输出打印客户端发送的消息      & 支持5个以上客户端同时发送消息并逐一打印 & 绑定至错误的端口号时提示出错信息 & 能从标准输入或文件接收信息 & 标准输入信息以两次回车作为结束标志 & 连接至错误的 \texttt{IP} 地址/端口号时能提示错误信息 & 支持在 \texttt{local host} 及两台不同机器上运行 & 支持长文本消息（不少于 \texttt{20KB}），有缓冲区管理 & 容错性好，无闪退 & 支持双工通信 \\
+		\hline
+	\end{tabularx}
 \end{table}
 
-\subsection{实验步骤}
+具体需求分析如下：
 
-\subsubsection{\texttt{create socket}}
+\begin{enumerate}
+	\item \textbf{服务器端（Server）需求}：
+	\begin{itemize}
+		\item \textbf{消息打印}：能够在标准输出上准确打印出客户端发送的消息，确保消息的完整性和准确性，以便服务器端对客户端的请求或信息进行及时处理和反馈。
+		\item \textbf{多客户端支持}：具备支持 5 个以上客户端同时发送消息的能力，服务器应能够对每个客户端的连接进行有效管理，并逐一打印来自不同客户端的消息，避免消息混淆和丢失，保证通信的并发处理能力。
+		\item \textbf{错误处理}：当绑定至错误的端口号时，服务器应具备错误检测机制，能够及时提示出错信息，明确告知用户端口号无效的原因，如端口号超出范围（小于 0 或大于 65535）或端口已被其他程序占用等情况，以便用户进行相应的调整和处理。
+	\end{itemize}
+	\item \textbf{客户端（Client）需求}：
+	\begin{itemize}
+		\item \textbf{信息接收}：客户端需要能够从标准输入或指定文件中接收信息，提供灵活的信息获取方式，满足不同用户的使用场景和需求。从标准输入读取信息时，应确保输入的便捷性和流畅性；从文件读取信息时，应支持常见的文本文件格式，准确读取文件中的内容并进行发送。
+		\item \textbf{输入结束标志}：客户端从标准输入的信息应以两次回车作为结束标志，这一特定的输入结束条件有助于服务器端和客户端之间明确数据传输的完整性和准确性，避免数据的截断或错误解析，确保双方对数据传输的一致性理解。
+		\item \textbf{错误处理}：在连接至错误的 IP 地址或端口号时，客户端应具备强大的错误检测和提示能力，能够及时准确地告知用户连接失败的原因，例如 IP 地址格式不正确、IP 地址不可达、端口号无效等情况，帮助用户快速定位和解决连接问题，提高程序的易用性和稳定性。
+	\end{itemize}
+	\item \textbf{整体系统需求}：
+	\begin{itemize}
+		\item \textbf{跨平台运行}：支持在 localhost 及两台不同机器上运行，确保程序在不同的网络环境和操作系统下具有良好的兼容性和可移植性。无论是在同一台主机上的不同进程间通信，还是在不同物理设备之间的网络通信，程序都应能够稳定运行，正确建立连接并进行高效的数据传输。
+		\item \textbf{长文本消息支持}：系统应支持长文本消息的传输，消息长度不少于 20KB。在处理长文本消息时，需要合理设计缓冲区管理机制，确保数据的可靠传输，避免因消息过长导致的数据丢失、传输中断或内存溢出等问题，保证大数据量信息的完整性和准确性。
+		\item \textbf{容错性}：整个网络通信系统应具备良好的容错性，在面对各种异常情况时，如网络波动、服务器或客户端程序异常退出、连接超时等，能够保持稳定运行，不出现闪退等严重影响用户体验的问题。系统应能够自动进行错误恢复或提供友好的错误提示信息，引导用户采取相应的措施解决问题，确保通信的连续性和可靠性。
+		\item \textbf{加分项：双工通信支持}：若要实现加分项，系统应支持双工通信，即服务器和客户端之间能够实现双向的信息交互。服务器不仅能够接收客户端发送的消息并进行处理和响应，还应能够主动向客户端发送消息，客户端同样能够接收和处理来自服务器的消息，这种双向通信能力能够大大增强系统的交互性和实用性，满足更多复杂的网络通信场景需求。
+	\end{itemize}
+\end{enumerate}
+
+通过满足以上各项需求，将实现一个功能完善、稳定可靠、兼容性强且具有一定扩展性的基于 Socket 编程的网络通信系统，能够为用户提供高效、准确的网络通信服务，适用于多种不同的应用场景，如即时通讯、文件传输、远程控制等领域。
+
+\section{软件设计}
+本项目基于Socket编程实现客户端与服务器的网络通信，采用经典的C/S架构。
+
+\subsection{架构分层}
+整体分为客户端与服务器端两层：
+- \textbf{客户端}：负责发起连接请求，向服务器发送数据，并接收服务器的反馈。
+- \textbf{服务器端}：监听指定端口，接收客户端连接，处理客户端请求并回传数据。
+
+\subsection{模块划分}
+\subsubsection{服务器端}
+\begin{enumerate}
+	\item \textbf{初始化模块}：负责初始化Socket，在Windows系统下还需额外执行相关准备工作，以此创建通信端点，并确定通信协议。
+	\item \textbf{绑定监听模块}：先将Socket与特定端口绑定，期间严格核验端口有效性，绑定成功后开启监听，设置最大连接数。
+	\item \textbf{连接处理模块}：接收客户端连接请求，成功则记录连接信息，后续利用多线程技术，为每个客户端连接分配独立线程，并行处理通信。
+	\item \textbf{数据交互模块}：承担向客户端发送与接收数据的职责，对收发失败等异常状况妥善处理。
+\end{enumerate}
+
+\subsubsection{客户端}
+\begin{enumerate}
+	\item \textbf{连接建立模块}：校验IP地址与端口号合法性，依此尝试与服务器建立连接。
+	\item \textbf{数据传输模块}：从标准输入、文件获取数据，发送给服务器，同时接收服务器传来的数据，处理收发异常。
+	\item \textbf{输入控制模块}：针对标准输入设计专门的结束规则，例如以两次回车为结束标志，保障输入数据的完整性与准确性。
+\end{enumerate}
+
+\subsection{数据结构}
+两端都借助\verb|sockaddr_in|结构体存储网络地址相关信息 。服务器端还用向量存储已连接客户端的套接字描述符，方便管理连接；客户端则增添部分成员变量，辅助记录发送状态。
+
+\subsection{接口设计}
+服务器与客户端各自向外暴露关键接口，像\verb|bind|、\verb|listen|、\verb|send|等，上层业务代码调用这些接口即可实现网络通信，底层复杂操作被封装隐藏。
+
+\subsection{异常处理}
+关键操作执行出错时，抛出特定异常并附加详细错误提示，调用处捕获异常做针对性处理，提升程序容错能力，维持运行稳定。
+
+\section{软件实现}
+
+\subsection{\texttt{create socket}}
 
 在 \texttt{Linux} 下，使用 \texttt{sys/socket.h} 头文件（\texttt{Windows} 下是 \texttt{winsock2.h}） 中的 \texttt{socket} 函数创建一个套接字。（在 \texttt{Windows} 下需要先调用 \texttt{WSAStartup} 进行准备）
 
@@ -119,7 +194,7 @@
 
 其中，\texttt{AF\_INET} 表示使用 \texttt{IPv4} 协议，\texttt{SOCK\_STREAM} 表示使用 \texttt{TCP} 协议。
 
-\subsubsection{\texttt{bind}}
+\subsection{\texttt{bind}}
 
 使用 \texttt{bind} 函数将套接字与端口号绑定。
 
@@ -147,7 +222,7 @@
     }
 \end{lstlisting}
 
-\subsubsection{\texttt{listen}}
+\subsection{\texttt{listen}}
 
 使用 \texttt{listen} 函数监听端口。
 
@@ -164,7 +239,7 @@
 
 其中，\texttt{n}表示最大连接数。
 
-\subsubsection{\texttt{accept}}
+\subsection{\texttt{accept}}
 
 使用 \texttt{accept} 函数接受客户端的连接。
 
@@ -186,7 +261,7 @@
     }
 \end{lstlisting}
 
-\subsubsection{\texttt{connect}}
+\subsection{\texttt{connect}}
 
 使用 \texttt{connect} 函数主动与服务器建立连接。
 
@@ -216,7 +291,7 @@
     }
 \end{lstlisting}
 
-\subsubsection{\texttt{send}}
+\subsection{\texttt{send}}
 
 使用 \texttt{send} 函数发送数据。
 
@@ -232,7 +307,7 @@
     }
 \end{lstlisting}
 
-\subsubsection{\texttt{recv}}
+\subsection{\texttt{recv}}
 
 使用 \texttt{recv} 函数接收数据。
 
@@ -250,7 +325,7 @@
     }
 \end{lstlisting}
 
-\subsubsection{\texttt{close}}
+\subsection{\texttt{close}}
 
 使用 \texttt{close} 函数关闭套接字。
 
@@ -274,24 +349,7 @@
     }
 \end{lstlisting}
 
-\section{实验环境}
-\texttt{Windows} 下：
-\begin{itemize}[noitemsep]
-    \item \texttt{Windows 11 家庭中文版 23H2 22631.2715}
-    \item \texttt{gcc version 13.2.0 (MinGW-W64 x86\_64-ucrt-mcf-seh, built by Brecht Sanders)}
-    \item \texttt{GNU Make 3.81}
-\end{itemize}
-
-\texttt{Linux} 下：
-
-\begin{itemize}[noitemsep]
-    \item \texttt{Ubuntu 22.04.3 LTS on Windows 10 x86\_64}
-    \item \texttt{gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04)}
-    \item \texttt{GNU Make 4.3}
-\end{itemize}
-
-
-\section{实验结果与分析}
+\section{软件测试}
 
 \subsection{\texttt{Server}}
 
